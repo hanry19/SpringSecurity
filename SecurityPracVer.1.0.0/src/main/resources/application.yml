@@ -1,0 +1,22 @@
+
+spring:
+  datasource:
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1521:orcl
+    username: C##HHH
+    password: HHH
+  thymeleaf:
+    cache: false
+
+mybatis:
+  mapper-locations: classpath:/mapper/*.xml
+#  type-aliases-package: com.example.boardPrac2.dto.**
+
+logging:
+  level:
+    org.apache.coyote.http11 : debug
+    org.springframework.security.web : debug
+    com.example.securiDemo : debug
+
+
+
