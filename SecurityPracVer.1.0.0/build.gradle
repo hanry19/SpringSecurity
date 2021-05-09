@@ -2,6 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.4.5'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	id 'war'
 }
 
 group = 'com.example'
@@ -29,6 +30,14 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
+
+//	//JSP 추가 시작
+//	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
+//	implementation 'javax.servlet:jstl'
+//	implementation group: 'org.springframework.security', name: 'spring-security-taglibs', version: '5.4.6'
+
+////JSP 추가 끝
+
 }
 
 test {
