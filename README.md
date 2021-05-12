@@ -1,4 +1,4 @@
-## Spring Security 로그인/회원가입 구현 연습
+## Spring Security 로그인/회원가입 구현 + 게시판 병합
 
 
 ## 개요
@@ -25,3 +25,7 @@
 
 ### 2021.05.09
  1. View단 JSP에서 thymeleaf 로 변경
+
+### 2021.05.12
+ 1. Spring Security + 게시판 병합
+ 2. Spring Security 로그인 시 성공/실패 로직 구현 (Provider 관련)
