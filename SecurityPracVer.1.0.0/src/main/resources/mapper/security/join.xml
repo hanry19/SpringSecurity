@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.NewLearn.mapper.login.LoginMapper">
+
+    <insert id="memberSignUp" parameterType="com.example.NewLearn.dto.member.MemberDTO">
+        /*회원 가입*/
+        INSERT INTO SECURITY_MEMBER
+        (
+         NO, EMAIL, PASSWORD, PHONE, name, USERROLE, GITURL, TOTALAMOUNT, passwordLock, MODDATE,REGDATE,STATUS )
+        VALUES
+        (
+            SEQ_SECURITY.nextval
+        , #{EMAIL}
+        , #{password}
+        , #{PHONE}
+        , #{name}
+        , #{userRole}
+        , #{GITURL}
+        , #{TOTALAMOUNT}
+        , 0
+        , TO_CHAR(SYSDATE,'YYYYMMDDHH24MISS')
+        , TO_CHAR(SYSDATE,'YYYYMMDDHH24MISS')
+        , 'O'
+        )
+    </insert>
+
+
+
+
+
+
+
+
+</mapper>

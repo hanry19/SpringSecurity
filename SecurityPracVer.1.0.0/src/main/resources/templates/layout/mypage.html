@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<th:block th:fragment="setContent(content)">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>NewLearn MyPage Setting</title>
+
+  <!-- Bootstrap core CSS -->
+  <link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link th:href="@{/css/simple-sidebar.css}" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="d-flex" id="wrapper">
+
+  <!-- Sidebar -->
+  <div class="bg-light border-right" id="sidebar-wrapper">
+    <div class="sidebar-heading">Start Bootstrap </div>
+    <div class="list-group list-group-flush">
+      <a th:href="@{/mypage}" class="list-group-item list-group-item-action bg-light">Member List</a>
+      <a th:href="@{/member}" class="list-group-item list-group-item-action bg-light">Find Member</a>
+      <a href="#" class="list-group-item list-group-item-action bg-light">개발중</a>
+      <a href="#" class="list-group-item list-group-item-action bg-light">개발중</a>
+      <a href="#" class="list-group-item list-group-item-action bg-light">개발중</a>
+      <a href="#" class="list-group-item list-group-item-action bg-light">개발중</a>
+    </div>
+  </div>
+  <!-- /#sidebar-wrapper -->
+
+  <!-- Page Content -->
+  <div id="page-content-wrapper">
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+      <button class="btn btn-primary" id="menu-toggle">Toggle Menu</button>
+
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+          <li class="nav-item active">
+            <a class="nav-link" th:href="@{/mypage}">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Dropdown
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+
+
+        <th:block th:replace = "${content}"></th:block>
+
+
+
+    </div>
+  </div>
+  <!-- /#page-content-wrapper -->
+
+</div>
+<!-- /#wrapper -->
+
+<!-- Bootstrap core JavaScript -->
+<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+<!-- Menu Toggle Script -->
+<script>
+  $("#menu-toggle").click(function(e) {
+    e.preventDefault();
+    $("#wrapper").toggleClass("toggled");
+  });
+
+// 페이징 링크 값 받은 뒤 전달 시작
+  var actionForm = $("#actionForm");
+
+  $(".page-link").on("click", function (e) {
+    e.preventDefault();
+
+    var targetPage = $(this).attr("href");
+    console.log(targetPage);
+
+    actionForm.find("input[name ='pageNum']").val(targetPage);
+    actionForm.submit();
+
+  });
+
+  // 페이징 링크 값 받은 뒤 전달 끝
+
+  // 동적 검색 시작
+  var searchForm = $("#searchForm");
+
+  $("#searchForm button").on("click", function(e) {
+    e.preventDefault();
+    console.log ("............click")
+
+    // 검색 시 나타나야할 페이지는 무조건 1페이지여야 한다.
+    // 그렇기에 pageNum 값을 1로 지정해준다
+    searchForm.find("input[name='pageNum']").val(1);
+    searchForm.submit();
+
+  });
+
+  // 동적 검색 끝
+
+
+  //
+/*  $(".move").on("click", function (e) {
+    e.preventDefault();
+
+    var targetNo = $(this).attr("href");
+    console.log(targetNo);
+
+    actionForm.append("<input type='hidden' name='no' value='"+targetNo+"'>");
+    actionForm.attr("actiom","")
+
+  });*/
+
+  //
+
+</script>
+
+</body>
+</th:block>
+
+</html>

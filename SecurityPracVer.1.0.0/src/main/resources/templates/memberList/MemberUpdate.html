@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="~{/layout/mypage :: setContent(~{this::content} )}">
+
+    <th:block th:fragment="content">
+
+
+        <h1 class="mt-4">회원 정보 수정 </h1>
+
+        <form role="form" action method="post" th:object=${update}>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">Password</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">e-mail</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">GitHub Url</th>
+                    <th scope="col">Blog Url</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr >
+                    <input type="hidden" id="no" name="no" th:value="${update.no}"  >
+                    <td><p  th:text="${update.no}"></p></td>
+                    <td><p  th:text="${update.id}"></p></td>
+                    <td><input type="password" id="password" name="password" th:value="${update.password}"></td>
+                    <td><p  th:text="${update.name}"></p></td>
+                    <td><input type="text" id="email" name="email" th:value="${update.email}"></td>
+                    <td><input type="text" id="phone" name="phone" th:value="${update.phone}"></td>
+                    <td><input type="text" id="gitUrl" name="gitUrl" th:value="${update.gitUrl}"></td>
+                    <td><input type="text" id="blogUrl" name="blogUrl" th:value="${update.blogUrl}"></td>
+                    <td><input class="btn_wrap text-left" type="submit" value="수정완료"  th:formaction="@{/mypage/update}"></td>
+
+                </tr>
+                </tbody>
+
+            </table>
+        </form>
+
+
+    </th:block>
+
+</th:block>
+
+</html>

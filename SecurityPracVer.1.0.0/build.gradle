@@ -2,7 +2,6 @@ plugins {
 	id 'org.springframework.boot' version '2.4.5'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
-	id 'war'
 }
 
 group = 'com.example'
@@ -20,23 +19,33 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-security'
+//	타임리프
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+//	spring boot web
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.4'
-	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
-	compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'com.oracle.database.jdbc:ojdbc8'
-	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+//	mybatis1
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.4'
+
+//	lombok
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+//	oracle    * 변경 필요
+	runtimeOnly 'com.oracle.database.jdbc:ojdbc8'
+
+// 타임리프 레이아웃 변경
+	implementation group: 'nz.net.ultraq.thymeleaf', name: 'thymeleaf-layout-dialect', version: '2.5.2'
+
+// spring security
 	testImplementation 'org.springframework.security:spring-security-test'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
 
-//	//JSP 추가 시작
-//	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
-//	implementation 'javax.servlet:jstl'
-//	implementation group: 'org.springframework.security', name: 'spring-security-taglibs', version: '5.4.6'
-
-////JSP 추가 끝
+	/*devtools*/
+	compile('org.springframework.boot:spring-boot-devtools')
+	compile('org.apache.tomcat.embed:tomcat-embed-jasper')
 
 }
 

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.NewLearn.mapper.login.LoginMapper">
+
+
+    <select id="selectMemberInfo" parameterType="String" resultType="com.example.NewLearn.dto.member.MemberDTO">
+        /* 회원정보조회 */
+        SELECT
+            email
+             , password
+             , name
+             , userRole
+        FROM NEWMEMBERLIST
+        WHERE email = #{email}
+    </select>
+
+    <update id="passwordFailCnt" parameterType="String">
+        /*비밀번호 틀린 횟수 증가*/
+        UPDATE NEWMEMBERLIST
+        SET
+            passwordLock = NVL(passwordLock, 0) + 1
+        WHERE
+            email = #{email}
+    </update>
+
+    <update id="resetPasswordFailCnt" parameterType="String">
+        /*비밀번호 틀린 횟수 초기화*/
+        UPDATE NEWMEMBERLIST
+        SET
+            passwordLock = 0
+        WHERE
+            email = #{email}
+    </update>
+
+    <insert id="AddLoginLog" parameterType="com.example.NewLearn.dto.security.LoginLogDTO">
+        /* 로그인 로그 */
+        INSERT INTO SECURITY_MEMBER_LOG
+        (
+            SEQ /* 테이블 키 */
+        , email /* 아이디 */
+        , loginIp /* 로그인no 아이피 */
+        , loginDate /* 로그인 날짜 */
+        , status /*성공여부*/
+        )
+        VALUES
+        (
+            SEQ_SECURITY_log.nextval
+        , #{email}
+        , #{loginIp}
+        , TO_CHAR(SYSDATE,'YYYYMMDDHH24MISS')
+        , #{status}
+        )
+    </insert>
+
+
+
+
+</mapper>

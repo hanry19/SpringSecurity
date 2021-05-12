@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="~{/layout/mypage :: setContent(~{this::content} )}">
+
+    <th:block th:fragment="content">
+
+
+        <form role="form" th:object=${detail} th:action method="get">
+            <div class="btn_wrap text-left">
+                <input type="submit" th:value="목록" th:formaction="@{/mypage}">
+            </div>
+            <div class="btn_wrap text-left">
+                <input type="submit" th:value="수정" th:formaction="@{/mypage/update/{no}(no=${detail.no})}">
+            </div>
+        </form>
+        <form role="form" th:object=${detail}  method="post">
+            <div class="btn_wrap text-left">
+                <input type="submit" th:value="삭제" th:formaction="@{/mypage/delete/{no}(no=${detail.no})}">
+            </div>
+        </form>
+
+
+        <h1 class="mt-4">회원 명부</h1>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">No</th>
+                <th scope="col">ID</th>
+                <th scope="col">Password</th>
+                <th scope="col">Name</th>
+                <th scope="col">e-mail</th>
+                <th scope="col">Phone</th>
+                <th scope="col">GitHub Url</th>
+                <th scope="col">Blog Url</th>
+                <th scope="col">Total Amount</th>
+                <th scope="col">regDate</th>
+
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr th:object=${detail} >
+                <td th:text="${detail.no}"scope="row"></td>
+                <td th:text="${detail.id}"></td>
+                <td th:text="${detail.password}"></td>
+                <td th:text="${detail.name}"></td>
+                <td th:text="${detail.email}"></td>
+                <td th:text="${detail.phone}"></td>
+                <td th:text="${detail.gitUrl}"></td>
+                <td th:text="${detail.blogUrl}"></td>
+                <td th:text="${detail.totalAmount}"></td>
+                <td th:text="${detail.regDate}"></td>
+            </tr>
+            </tbody>
+          </table>
+
+
+
+
+        <!--페이징 끝-->
+
+    </th:block>
+
+</th:block>
+
+</html>
