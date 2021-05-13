@@ -17,11 +17,9 @@
  4. 게시판 프로젝트와 병합하여 사용
 
 ## API 설계
- [##_Image|kage@Zxlx2/btq4Otyaz0W/O405yAaecnLRqD2wEdNac0/img.png|alignCenter|data-origin-width="782" data-origin-height="429" data-ke-mobilestyle="widthOrigin"|||_##]
+![image](https://user-images.githubusercontent.com/63430211/118133138-6e357780-b43b-11eb-824d-c6fbae9b2f7a.png)
  
- 
-[##_Image|kage@cmk1q7/btq4SlMBMLj/5SkArkxdvmLrLMbATIm3x1/img.png|alignCenter|data-origin-width="800" data-origin-height="395" data-ke-mobilestyle="widthOrigin"|||_##]
-
+![image](https://user-images.githubusercontent.com/63430211/118133172-77bedf80-b43b-11eb-8148-942e9af170cb.png)
 
 ## 개발일지
 
@@ -40,5 +38,6 @@
  **1. 문제 1**
    - Spring Security 연동 시 JS, CSS 까지 연동이 안되는 문제 발생
    - ignore 까지 했지만 안되는 현상이 발생하여 문제 추적 중
+
  **2. 문제 2**
    - 로그인 시 페이지가 제대로 넘어가질 않는 문제 발생
