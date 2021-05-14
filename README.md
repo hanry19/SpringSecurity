@@ -41,6 +41,7 @@
 
  **2. 문제 2**
    - 로그인 시 페이지가 제대로 넘어가질 않는 문제 발생
+
  **2.1 원인 및 추론**
    - 로그인 이후 부가작업을 진행하기 위해 **SimpleUrlAuthenticationSuccessHandler.class** 중 **onAuthenticationSuccess** 메서드를 상속받을 때 **FilterChain** 이 포함된 메서드를 상속받아 로그인 이후 페이지로 넘어가질 못하였다. 
    
