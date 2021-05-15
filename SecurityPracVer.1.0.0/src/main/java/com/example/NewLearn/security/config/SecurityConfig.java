@@ -5,6 +5,7 @@ import com.example.NewLearn.security.handlers.AuthProvider;
 import com.example.NewLearn.security.handlers.AuthSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -19,6 +20,9 @@ import javax.sql.DataSource;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private PrincipalO
 
     @Autowired
     DataSource dataSource;
@@ -41,43 +45,57 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return repo;
     }
 
+//    @Override
+//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.authenticationProvider(authProvider);
+//    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
 
         http.authorizeRequests()
-//                .antMatchers("/user/**").access("hasRole('ROLE_USER')")
+                .antMatchers("/user/**").access("hasRole('ROLE_USER')")
 //                .antMatchers("/manager/**").access("hasRole('ROLE_MANAGER')")
-//                .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
+                .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
+
+                .antMatchers("/mypage/**").access("hasRole('ROLE_USER')or hasRole('ROLE_ADMIN')")
 
                 //누구나 접속할 수 있는 페이지이기 때문에 누구나 접근이 가능하다 (.permitAll())
                 .antMatchers("/main",
-                        "/admin/mypage",
                         "/login",
-                        "/join",
-                        "/join/idCheck",
-                        "/login/find",
-                        "/join/insert").permitAll()
+                        "/sign-Up",
+                        "/pwFind",
+                        "/login/**",
+                        "/google",
+                        "/google/callback",
+                        "/logout"
+
+                ).permitAll()
 
                 //기타 /** 의 경로는 인증을 필요로 한다
                 .antMatchers("/**").authenticated();
 
-        http.formLogin()
-                // connect to login page via below url
-                .loginPage("/signUp")
-                // Path of the login button when pressed
-                .loginProcessingUrl("login/login-processing")
+        http.oauth2Login().loginPage("/login");
 
+        http.formLogin()
+                // 로그인 후 보여줄 페이지
+                .loginPage("/login")
+                // 로그인 버튼 눌릴 시 진행될 프로세스 연결
+                .loginProcessingUrl("/login-process")
                 .usernameParameter("email")    //input name 파라미터로 "email"를 받는다.
                 .passwordParameter("password") //input name 파라미터로 "password"를 받는다.
                 .failureHandler(authFailureHandler) //로그인 실패시 수행하는 클래스
-                .successHandler(authSuccessHandler); // 로그인 성공시 수행하는 클래스
+                .successHandler(authSuccessHandler);// 로그인 성공시 수행하는 클래스
+
 
         http.logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login");
                 //logout 경로로 요청이 들어올 경우 이 경로로 리다이렉트 하고 세션 초기화
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/login")  // 이 경로로 리다이렉트 하고
-                .invalidateHttpSession(true);   // 세션 초기화
+//                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+//                .logoutSuccessUrl("/login")  // 이 경로로 리다이렉트 하고
+//                .invalidateHttpSession(true);   // 세션 초기화
 
 
         http.rememberMe()

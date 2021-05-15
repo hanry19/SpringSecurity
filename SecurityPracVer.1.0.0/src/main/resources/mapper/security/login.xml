@@ -36,22 +36,11 @@
 
     <insert id="AddLoginLog" parameterType="com.example.NewLearn.dto.security.LoginLogDTO">
         /* 로그인 로그 */
-        INSERT INTO SECURITY_MEMBER_LOG
-        (
-            SEQ /* 테이블 키 */
-        , email /* 아이디 */
-        , loginIp /* 로그인no 아이피 */
-        , loginDate /* 로그인 날짜 */
-        , status /*성공여부*/
-        )
+        INSERT INTO NewSecurityMemberLog
+            ( no, email, loginIp, status       )
         VALUES
-        (
-            SEQ_SECURITY_log.nextval
-        , #{email}
-        , #{loginIp}
-        , TO_CHAR(SYSDATE,'YYYYMMDDHH24MISS')
-        , #{status}
-        )
+            (SEQ_SECURITY_log.nextval , #{email}, #{loginIp}, #{status} )
+
     </insert>
 
 

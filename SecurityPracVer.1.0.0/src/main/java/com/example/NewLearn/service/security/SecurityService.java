@@ -1,9 +1,12 @@
 package com.example.NewLearn.service.security;
 
 import com.example.NewLearn.dto.member.MemberDTO;
+import com.example.NewLearn.dto.paging.Criteria;
 import com.example.NewLearn.dto.security.LoginLogDTO;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+
+import java.util.List;
 
 public interface SecurityService extends UserDetailsService {
 
@@ -22,5 +25,10 @@ public interface SecurityService extends UserDetailsService {
     /* 로그인 로그 */
     int AddLoginLog(LoginLogDTO loginLogDTO) throws Exception;
 
+    // 회원 전체 조회
+    List<MemberDTO> selectAllMember(Criteria cri);
+
+    //전체 글 수량 조회
+    int getTotal();
 
 }

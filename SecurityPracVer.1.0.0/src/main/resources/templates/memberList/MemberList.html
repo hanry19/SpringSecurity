@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <th:block th:replace="~{/layout/mypage :: setContent(~{this::content} )}">
 
     <th:block th:fragment="content">
-
-
 
         <h1 class="mt-4">회원 명부</h1>
         <table class="table table-striped">
@@ -15,10 +15,7 @@
                 <th scope="col">e-mail</th>
                 <th scope="col">Name</th>
                 <th scope="col">Role</th>
-                <th scope="col">Phone</th>
-                <th scope="col">GitHub Url</th>
                 <th scope="col">passwordLock</th>
-                <th scope="col">Total Amount</th>
                 <th scope="col">regDate</th>
 
             </tr>
@@ -30,15 +27,25 @@
                 <td th:text="${dto.email}"></td>
                 <td th:text="${dto.name}"></td>
                 <td th:text="${dto.userRole}"></td>
-                <td th:text="${dto.phone}"></td>
-                <td th:text="${dto.gitUrl}"></td>
                 <td th:text="${dto.passwordLock}"></td>
-                <td th:text="${dto.totalAmount}"></td>
-                <td th:text="${dto.redDate}"></td>
+                <td th:text="${dto.regDate}"></td>
 <!--                <td th:text="${dto.regDate}"></td>-->
             </tr>
             </tbody>
           </table>
+
+
+        <div sec:authorize="hasRole('ROLE_USER')"> HAS user ROLE</div>
+        <div sec:authorize="hasRole('ROLE_ADMIN')"> HAS ADMIN ROLE</div>
+
+
+
+        <div class="form-group">
+            <input class="form-control" name=username value='<sec:authentication property="principal.username"/>' readonly="readonly">
+
+
+        </div>
+
 
 
     <!--        페이징 시작 -->
@@ -78,7 +85,7 @@
             pagenum , amount를 수정해야한다.
 
     -->
-            <form id="actionForm" action="/mypage" method="get">
+            <form id="actionForm" action="/mypage/select" method="get">
                 <input type="hidden" name="pageNum" th:value="${pageMaker.cri.pageNum}">
                 <input type="hidden" name="amount" th:value="${pageMaker.cri.amount}">
             </form>
@@ -89,12 +96,12 @@
 <!--        검색 시작
             검색을 할때는  pageNum,amount도 같이 전달해야한다.  -->
 
-        <form id='searchForm' action="/mypage" method="get" >
+        <form id='searchForm' action="/mypage/select" method="get" >
 <!--            크리테리아로 수집을 해야하기 때문애 name = type으로 한다. -->
             <select name="type">
                 <option th:selected="${pageMaker.cri.type=='TC'}">---</option>
-                <option value="I" th:selected="${pageMaker.cri.type=='T'}">ID</option>
-                <option value="N" th:selected="${pageMaker.cri.type=='C'}">이름</option>
+                <option value="T" th:selected="${pageMaker.cri.type=='T'}">e-mail</option>
+                <option value="C" th:selected="${pageMaker.cri.type=='C'}">이름</option>
             </select>
 
 <!--            name은 keyword로 준다. -->

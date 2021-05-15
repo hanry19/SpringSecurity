@@ -15,17 +15,13 @@ import java.util.Date;
 @ToString
 public class MemberDTO implements UserDetails {
 
-    private long no;
+    private int no;
     private String email;
     private String password;
     private String name;
-    private String phone;
     private String userRole;
-    private String gitUrl;
-    private int totalAmount;
     private int passwordLock;
-    private Date modDate;
-    private Date dateReg;
+    private Date regDate;
     private String status;
 
 

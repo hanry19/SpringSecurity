@@ -5,6 +5,8 @@ import com.example.NewLearn.dto.paging.Criteria;
 import com.example.NewLearn.mapper.member.BoardMemberMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,6 +38,9 @@ public class BoardMemberServiceImpl implements BoardMemberService {
 
     @Override
     public int memberUpdate(MemberDTO memberDTO) {
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        memberDTO.setPassword(passwordEncoder.encode(memberDTO.getPassword()));
+
         log.info("여기는 update 서비스 단!!!! ");
         return boardMemberMapper.memberUpdate(memberDTO);
     }

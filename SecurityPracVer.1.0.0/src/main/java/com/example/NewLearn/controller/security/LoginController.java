@@ -2,49 +2,87 @@ package com.example.NewLearn.controller.security;
 
 import com.example.NewLearn.dto.member.MemberDTO;
 import com.example.NewLearn.service.security.SecurityService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-//@RequestMapping("/all")
+@Log4j2
+@RequiredArgsConstructor
 public class LoginController {
 
-    @Autowired
-    SecurityService securityService;
+    private final SecurityService securityService;
 
-    //회원가입 페이지 이동
-    @GetMapping("/signUp")
-    public String join() {
-        return  "login/join";
+/*
+    @RequestMapping("/google")
+    public String googleLogin() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println(auth.getPrincipal());
+        return "google/googleIndex";
     }
-    //로그인 페이지 이동
+
+    @RequestMapping("/google/callback")
+    public String callback() {
+        System.out.println("redirecting to home page");
+        return "google/googleHome";
+    }
+*/
+
+
+
+
+    //회원가입 GET
+    @GetMapping("/sign-Up")
+    private String join(@ModelAttribute MemberDTO memberDTO) {
+
+        log.info(":::::::::::  회원가입  in controller ::::::::::::::::::");
+
+        return "login/join";
+    }
+    //회원가입 Insert
+    @PostMapping("/sign-Up")
+    private String setInsertMember(@ModelAttribute MemberDTO memberDTO) throws Exception{
+        log.info("::::::::::: 회원가입 전송 in controller ::::::::::::::::::");
+        securityService.memberSignUp(memberDTO);
+        return "forward:/login";
+    }
+
+    //로그인 GET
     @RequestMapping("/login")
-    public String lgoin() {
+    private String login() {
+        log.info(":::::::::::  로그인  in controller ::::::::::::::::::");
         return "login/login";
     }
+
     //로그인 에러페이지 이동
     @GetMapping("/login/login-error")
-    public String error() {
+    private String error() {
+
+        log.info(":::::::::::  로그인 에러페이지 in controller ::::::::::::::::::");
+
         return  "login/error";
     }
+
+    /*    // 로그인 성공 이동 그냥 바로 메인으로 쏘으면 될듯? 필요 없음
+    @GetMapping("/main")
+    private String loginSuccess() {
+        return  "main/home";
+    }*/
+
 
     //아이디 중복체크
     @PostMapping("/join/idCheck")
     @ResponseBody
-    public String idCheck(@RequestParam String email) throws Exception{
+    private String idCheck(@RequestParam String email) throws Exception{
         MemberDTO memberDTO = securityService.selectMemberInfo(email);
         String canUse = memberDTO != null ? "" : "Y";
         return canUse;
     }
 
-    //회원가입 Insert
-    @PostMapping("/signUp")
-    public String setInsertMember(MemberDTO memberDTO) throws Exception{
-        if(securityService.memberSignUp(memberDTO) > 0){
-            return  "login/login";
-        }else {
-            return  "join/join";
-        }
-    }
+
 }

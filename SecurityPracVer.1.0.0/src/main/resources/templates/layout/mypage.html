@@ -30,7 +30,7 @@
   <div class="bg-light border-right" id="sidebar-wrapper">
     <div class="sidebar-heading">Start Bootstrap </div>
     <div class="list-group list-group-flush">
-      <a th:href="@{/mypage}" class="list-group-item list-group-item-action bg-light">Member List</a>
+      <a th:href="@{/mypage/select}" class="list-group-item list-group-item-action bg-light">Member List</a>
       <a th:href="@{/member}" class="list-group-item list-group-item-action bg-light">Find Member</a>
       <a href="#" class="list-group-item list-group-item-action bg-light">개발중</a>
       <a href="#" class="list-group-item list-group-item-action bg-light">개발중</a>
@@ -53,10 +53,10 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
           <li class="nav-item active">
-            <a class="nav-link" th:href="@{/mypage}">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-link" th:href="@{/mypage/select}">Home <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
+            <a th:href="@{/logout}">[로그아웃]</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

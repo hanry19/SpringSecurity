@@ -24,24 +24,26 @@
     <select id="searchTest" resultType="com.example.NewLearn.dto.member.MemberDTO">
 
         <![CDATA[
-            select * from NewSecurityMemberLog
-            where
+            select * from (
+        select /* index_desc(NewMemberList pk_board)   */ rownum rn, no, email, password,
+               name, userRole, passwordLock, regDate, status
+          from NewMemberList
+          where
                   ]]>
         <include refid="criteria"></include>
         <![CDATA[
         rownum < 10
         ]]>
-
     </select>
 
 
     <select id="selectAllMember" resultType="com.example.NewLearn.dto.member.MemberDTO">
         <![CDATA[
     select * from (
-          select  /* index_asr(NewMemberList pk_board)*/
-                 *
+           select /* index_desc(NewMemberList pk_board)   */ rownum rn, no, email, password,
+               name, userRole, passwordLock, regDate, status
+          from NewMemberList
 
-          from  NewSecurityMemberLog
           where    ]]>
         <include refid="criteria"></include>
         <![CDATA[       no > 0 and ROWNUM <= (#{pageNum} * #{amount})
@@ -53,34 +55,28 @@
     <select id="getTotal" resultType="int">
 
         select count(no)
-        from NewSecurityMemberLog
+        from NewMemberList
 
     </select>
 
     <select id="selectDetailMember" resultType="com.example.NewLearn.dto.member.MemberDTO">
         select
-        NO, EMAIL, PASSWORD, PHONE, name, USERROLE, GITURL, TOTALAMOUNT, passwordLock, MODDATE,REGDATE,STATUS
-        from memberList
+        NO, EMAIL, PASSWORD, name, USERROLE,  passwordLock,regDate,STATUS
+        from NewMemberList
         where no = #{no}
-
-
     </select>
 
     <delete id="memberDelete" parameterType="int">
         DELETE
-        FROM NewSecurityMemberLog
-        WHERE no = #{no}
+        FROM NewMemberList
+        WHERE email = #{email}
     </delete>
 
     <update id="memberUpdate" parameterType="com.example.NewLearn.dto.member.MemberDTO">
 
-        update NewSecurityMemberLog
+        update NewMemberList
         set password = #{password},
-            email    = #{email},
-            phone    = #{phone},
-            gitUrl   = #{gitUrl},
-            blogUrl  = #{blogUrl}
-            MODDATE = TO_CHAR(SYSDATE,'YYYYMMDDHH24MISS')
+            email    = #{email}
 
         where no = #{no}
 

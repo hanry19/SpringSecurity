@@ -1,8 +1,10 @@
 package com.example.NewLearn.service.security;
 
 import com.example.NewLearn.dto.member.MemberDTO;
+import com.example.NewLearn.dto.paging.Criteria;
 import com.example.NewLearn.dto.security.LoginLogDTO;
 import com.example.NewLearn.mapper.login.LoginMapper;
+import com.example.NewLearn.mapper.member.BoardMemberMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,11 +23,26 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SecurityServiceImpl implements SecurityService {
 
+    private final BoardMemberMapper boardMemberMapper;
     private final LoginMapper loginMapper;
+
+    @Override
+    public List<MemberDTO> selectAllMember(Criteria cri) {
+        log.info("여기는 select all member 서비스 단!!!! ");
+        return boardMemberMapper.selectAllMember(cri);
+    }
+
+    @Override
+    public int getTotal() {
+        log.info("여기는 get total 서비스 단!!!! ");
+        return boardMemberMapper.getTotal();
+    }
 
     // 시큐리티 사용자 인증
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        log.info("::::::::::: 사용자 인증 ::::::::::::::::::");
+
         MemberDTO member = loginMapper.selectMemberInfo(email);
         List<GrantedAuthority> authorities = new ArrayList<>();
 
@@ -39,16 +56,17 @@ public class SecurityServiceImpl implements SecurityService {
 
 
     @Override
-    public int memberSignUp(MemberDTO member) throws Exception {
+    public int memberSignUp(MemberDTO memberDTO) throws Exception {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        member.setPassword(passwordEncoder.encode(member.getPassword()));
+        memberDTO.setPassword(passwordEncoder.encode(memberDTO.getPassword()));
+        log.info(":::::::::::회원가입 서비스 단 ::::::::::::::::::");
 
-        return loginMapper.memberSignUp(member);
+        return loginMapper.memberSignUp(memberDTO);
     }
 
     @Override
     public MemberDTO selectMemberInfo(String email) {
-        return null;
+        return loginMapper.selectMemberInfo(email);
     }
 
     @Override

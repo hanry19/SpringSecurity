@@ -6,23 +6,18 @@
 
     <insert id="memberSignUp" parameterType="com.example.NewLearn.dto.member.MemberDTO">
         /*회원 가입*/
-        INSERT INTO SECURITY_MEMBER
+        INSERT INTO NewMemberList
         (
-         NO, EMAIL, PASSWORD, PHONE, name, USERROLE, GITURL, TOTALAMOUNT, passwordLock, MODDATE,REGDATE,STATUS )
+         NO, EMAIL, PASSWORD,  name, USERROLE,  passwordLock, STATUS )
         VALUES
         (
             SEQ_SECURITY.nextval
-        , #{EMAIL}
+        , #{email}
         , #{password}
-        , #{PHONE}
         , #{name}
-        , #{userRole}
-        , #{GITURL}
-        , #{TOTALAMOUNT}
+        , 'ROLE_USER'
         , 0
-        , TO_CHAR(SYSDATE,'YYYYMMDDHH24MISS')
-        , TO_CHAR(SYSDATE,'YYYYMMDDHH24MISS')
-        , 'O'
+        , 0
         )
     </insert>
 

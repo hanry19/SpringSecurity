@@ -38,11 +38,13 @@ public class AuthFailureHandler implements AuthenticationFailureHandler {
 
         try {
             email = exception.getMessage();
+
             if (securityService.selectMemberInfo(email) != null) {
                 securityService.passwordFailCnt(email);
+
                 loginLogDTO.setLoginIp(ip);
                 loginLogDTO.setEmail(email);
-                loginLogDTO.setStatus("faild");
+                loginLogDTO.setStatus("failure");
                 securityService.AddLoginLog(loginLogDTO);
                 msg = "password miss matching";
             } else {

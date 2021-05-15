@@ -2,6 +2,7 @@ package com.example.NewLearn.security.handlers;
 
 import com.example.NewLearn.dto.member.MemberDTO;
 import com.example.NewLearn.service.security.SecurityService;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +23,12 @@ import java.util.List;
 
 
 @Component
+@RequiredArgsConstructor
 public class AuthProvider implements AuthenticationProvider {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthSuccessHandler.class);
 
-    @Autowired
-    SecurityService securityService;
+    private final SecurityService securityService;
 
     //로그인 버튼을 누를 경우
     //실행 1
@@ -42,23 +43,26 @@ public class AuthProvider implements AuthenticationProvider {
 
     //실행 2
     private Authentication authenticate (String email, String password) throws  AuthenticationException {
+
+
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
 
         MemberDTO member = new MemberDTO();
+
         member = (MemberDTO) securityService.loadUserByUsername(email);
 
         if (member == null) {
-            logger.info("::::::::: can not found member Info ::::::::");
+            logger.info("::::::::: 회원정보 없다!!!::::::::");
             throw new UsernameNotFoundException(email);
         } else if (member != null && !passwordEncoder.matches(password, member.getPassword())) {
-            logger.info(":::::: miss matched password ::::::");
+            logger.info(":::::: 비번 틀렷다 ::::::");
             throw new BadCredentialsException(email);
         }
 
         grantedAuthorities.add(new SimpleGrantedAuthority(member.getUserRole()));
 
-        logger.info("# AuthProvider @@@@@@@ 2 번");
+        logger.info(" ㅇㅋㅇㅋ 통과 통과 ");
 
         return new MyAuthentication(email, password, grantedAuthorities, member);
 

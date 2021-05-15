@@ -44,8 +44,11 @@ dependencies {
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
 
 	/*devtools*/
-	compile('org.springframework.boot:spring-boot-devtools')
-	compile('org.apache.tomcat.embed:tomcat-embed-jasper')
+	compile 'org.springframework.boot:spring-boot-devtools'
+	compile 'org.apache.tomcat.embed:tomcat-embed-jasper'
+
+//	oAuth - for use to google api
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
 }
 
