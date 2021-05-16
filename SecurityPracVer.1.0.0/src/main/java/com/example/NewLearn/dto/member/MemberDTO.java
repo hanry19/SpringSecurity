@@ -4,9 +4,11 @@ package com.example.NewLearn.dto.member;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.Map;
 
 @Getter
 @Setter
@@ -19,7 +21,7 @@ public class MemberDTO implements UserDetails {
     private String email;
     private String password;
     private String name;
-    private String userRole;
+    private String role;
     private int passwordLock;
     private Date regDate;
     private String status;
@@ -32,8 +34,6 @@ public class MemberDTO implements UserDetails {
     private boolean isCredentialsNonExpired = true;
     private boolean isAccountNonExpired = true;
     private boolean isAccountNonLocked = true;
-
-
 
 
 

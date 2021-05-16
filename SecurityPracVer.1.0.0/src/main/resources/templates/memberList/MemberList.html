@@ -26,7 +26,7 @@
                 <td> <a class="move" th:text="${dto.no}"scope="row" ></a></td>
                 <td th:text="${dto.email}"></td>
                 <td th:text="${dto.name}"></td>
-                <td th:text="${dto.userRole}"></td>
+                <td th:text="${dto.role}"></td>
                 <td th:text="${dto.passwordLock}"></td>
                 <td th:text="${dto.regDate}"></td>
 <!--                <td th:text="${dto.regDate}"></td>-->
@@ -51,8 +51,9 @@
     <!--        페이징 시작 -->
 
             <div aria-label="Page navigation example ">
+                <li th:text="${pageMaker}"></li>
                 <ul class="pagination" th:each="obj :${pageMaker}" >
-                    <li class="page-item" th:classappend="${obj.cri.pageNum} == 1 ? active : null">
+                    <li class="page-item" >
                         <a class="page-link" th:href="${1}" aria-label="Previous">
                             <span aria-hidden="true">처음</span>
                         </a>

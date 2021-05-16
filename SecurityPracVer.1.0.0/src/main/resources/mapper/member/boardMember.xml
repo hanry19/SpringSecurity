@@ -10,10 +10,10 @@
         <trim prefix="(" suffix=") AND">
             <foreach collection="typeArr" item="type" separator="or">
                 <if test="type =='I'.toString()">
-                    email like '%'|| #{keyword}||'%'
+                 where  email like concat( '%', #{keyword},'%')
                 </if>
                 <if test="type =='N'.toString()">
-                    name like '%'||#{keyword}||'%'
+                where    name like '% #{keyword} %'
                 </if>
 
             </foreach>
@@ -23,60 +23,47 @@
 
     <select id="searchTest" resultType="com.example.NewLearn.dto.member.MemberDTO">
 
-        <![CDATA[
-            select * from (
-        select /* index_desc(NewMemberList pk_board)   */ rownum rn, no, email, password,
-               name, userRole, passwordLock, regDate, status
-          from NewMemberList
-          where
-                  ]]>
+        select * from memberList
         <include refid="criteria"></include>
-        <![CDATA[
-        rownum < 10
-        ]]>
+        order by no desc
+        limit #{pageStart},#{amount};
+
     </select>
 
 
     <select id="selectAllMember" resultType="com.example.NewLearn.dto.member.MemberDTO">
-        <![CDATA[
-    select * from (
-           select /* index_desc(NewMemberList pk_board)   */ rownum rn, no, email, password,
-               name, userRole, passwordLock, regDate, status
-          from NewMemberList
+        select * from memberList
 
-          where    ]]>
         <include refid="criteria"></include>
-        <![CDATA[       no > 0 and ROWNUM <= (#{pageNum} * #{amount})
-      )
-    where ROWNUM > (#{pageNum}-1) * #{amount}
-        ]]>
+        order by no desc
+        limit #{pageStart},#{amount};
     </select>
 
     <select id="getTotal" resultType="int">
 
         select count(no)
-        from NewMemberList
+        from memberList
 
     </select>
 
     <select id="selectDetailMember" resultType="com.example.NewLearn.dto.member.MemberDTO">
-        select
-        NO, EMAIL, PASSWORD, name, USERROLE,  passwordLock,regDate,STATUS
-        from NewMemberList
+        select *
+        from memberList
         where no = #{no}
     </select>
 
     <delete id="memberDelete" parameterType="int">
         DELETE
-        FROM NewMemberList
-        WHERE email = #{email}
+        FROM memberList
+        WHERE no = #{no}
     </delete>
 
     <update id="memberUpdate" parameterType="com.example.NewLearn.dto.member.MemberDTO">
 
-        update NewMemberList
-        set password = #{password},
-            email    = #{email}
+        update memberList
+        set
+            name = #{name},
+            Password = #{password}
 
         where no = #{no}
 

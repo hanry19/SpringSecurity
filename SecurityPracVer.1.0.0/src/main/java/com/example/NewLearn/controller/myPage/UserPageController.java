@@ -38,7 +38,7 @@ public class UserPageController {
 
     // 회원 상세 조회
     @GetMapping("/detail/{no}")
-    public String selectMemberDetail(@PathVariable("no") int no, Model model) {
+    public String selectMemberDetail(@PathVariable int no, Model model) {
         log.info("::::::::::: 회원 상세조회  in controller ::::::::::::::");
 
         model.addAttribute("detail", boardMemberService.selectDetailMember(no));

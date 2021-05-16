@@ -6,19 +6,13 @@
 
     <insert id="memberSignUp" parameterType="com.example.NewLearn.dto.member.MemberDTO">
         /*회원 가입*/
-        INSERT INTO NewMemberList
-        (
-         NO, EMAIL, PASSWORD,  name, USERROLE,  passwordLock, STATUS )
-        VALUES
-        (
-            SEQ_SECURITY.nextval
-        , #{email}
-        , #{password}
-        , #{name}
-        , 'ROLE_USER'
-        , 0
-        , 0
-        )
+
+        insert into memberlist (email, password, name) value (
+            #{email}
+            ,#{password}
+            ,#{name}
+            );
+
     </insert>
 
 

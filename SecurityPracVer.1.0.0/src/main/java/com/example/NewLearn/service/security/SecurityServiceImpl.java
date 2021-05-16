@@ -47,7 +47,7 @@ public class SecurityServiceImpl implements SecurityService {
         List<GrantedAuthority> authorities = new ArrayList<>();
 
         if (member != null) {
-            authorities.add(new SimpleGrantedAuthority(member.getUserRole()));
+            authorities.add(new SimpleGrantedAuthority(member.getRole()));
             member.setAuthorities(authorities);
 
         }
@@ -63,6 +63,8 @@ public class SecurityServiceImpl implements SecurityService {
 
         return loginMapper.memberSignUp(memberDTO);
     }
+
+
 
     @Override
     public MemberDTO selectMemberInfo(String email) {

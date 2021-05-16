@@ -60,7 +60,7 @@ public class AuthProvider implements AuthenticationProvider {
             throw new BadCredentialsException(email);
         }
 
-        grantedAuthorities.add(new SimpleGrantedAuthority(member.getUserRole()));
+        grantedAuthorities.add(new SimpleGrantedAuthority(member.getRole()));
 
         logger.info(" ㅇㅋㅇㅋ 통과 통과 ");
 

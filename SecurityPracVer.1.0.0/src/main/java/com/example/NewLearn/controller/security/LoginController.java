@@ -18,23 +18,6 @@ public class LoginController {
 
     private final SecurityService securityService;
 
-/*
-    @RequestMapping("/google")
-    public String googleLogin() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println(auth.getPrincipal());
-        return "google/googleIndex";
-    }
-
-    @RequestMapping("/google/callback")
-    public String callback() {
-        System.out.println("redirecting to home page");
-        return "google/googleHome";
-    }
-*/
-
-
-
 
     //회원가입 GET
     @GetMapping("/sign-Up")

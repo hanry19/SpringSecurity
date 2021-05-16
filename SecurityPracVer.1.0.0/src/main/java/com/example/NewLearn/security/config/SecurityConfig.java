@@ -3,6 +3,7 @@ package com.example.NewLearn.security.config;
 import com.example.NewLearn.security.handlers.AuthFailureHandler;
 import com.example.NewLearn.security.handlers.AuthProvider;
 import com.example.NewLearn.security.handlers.AuthSuccessHandler;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -19,18 +20,14 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import javax.sql.DataSource;
 
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
-
-    @Autowired
-    DataSource dataSource;
-    @Autowired
-    AuthProvider authProvider;
-    @Autowired
-    AuthSuccessHandler authSuccessHandler;
-    @Autowired
-    AuthFailureHandler authFailureHandler;
+    private final DataSource dataSource;
+    private final AuthProvider authProvider;
+    private final AuthSuccessHandler authSuccessHandler;
+    private final AuthFailureHandler authFailureHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -44,7 +41,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return repo;
     }
 
-//    @Override
+// 이거 지워도 되는건가 모르겟네
+// 2021.05.15 토요일 5시  성준아 이거 확인해보고 답장 줘
+
+    //    @Override
 //    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 //        auth.authenticationProvider(authProvider);
 //    }
@@ -66,8 +66,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/sign-Up",
                         "/pwFind",
                         "/login/**",
-                        "/google",
-                        "/google/callback",
+                        "/oauth/**",
+                        "/oauth2/**",
                         "/logout"
 
                 ).permitAll()
@@ -75,7 +75,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //기타 /** 의 경로는 인증을 필요로 한다
                 .antMatchers("/**").authenticated();
 
-        http.oauth2Login().loginPage("/login");
+
 
         http.formLogin()
                 // 로그인 후 보여줄 페이지
@@ -86,6 +86,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordParameter("password") //input name 파라미터로 "password"를 받는다.
                 .failureHandler(authFailureHandler) //로그인 실패시 수행하는 클래스
                 .successHandler(authSuccessHandler);// 로그인 성공시 수행하는 클래스
+
 
 
         http.logout()

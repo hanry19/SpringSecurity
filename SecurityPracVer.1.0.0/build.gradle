@@ -19,37 +19,17 @@ repositories {
 }
 
 dependencies {
-//	타임리프
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-//	spring boot web
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
-//	mybatis1
-	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.4'
-
-//	lombok
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
-
-//	oracle    * 변경 필요
-	runtimeOnly 'com.oracle.database.jdbc:ojdbc8'
-
-// 타임리프 레이아웃 변경
-	implementation group: 'nz.net.ultraq.thymeleaf', name: 'thymeleaf-layout-dialect', version: '2.5.2'
-
-// spring security
-	testImplementation 'org.springframework.security:spring-security-test'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
-
-	/*devtools*/
-	compile 'org.springframework.boot:spring-boot-devtools'
-	compile 'org.apache.tomcat.embed:tomcat-embed-jasper'
-
-//	oAuth - for use to google api
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
-
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.4'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+	compileOnly 'org.projectlombok:lombok'
+	runtimeOnly 'mysql:mysql-connector-java'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.security:spring-security-test'
 }
 
 test {

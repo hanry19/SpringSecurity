@@ -1,8 +1,6 @@
 package com.example.NewLearn.dto.paging;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @ToString
 @Getter
@@ -14,19 +12,17 @@ public class PageDTO {
 
     private int total;
     private Criteria cri;
-
-    //  private int pageNum; // 지금 내가 보고 잇는 페이지 번호
-//    private int amount;
-
-
+//    private int displayPageNum = 5; // 하단에 출력할 페이지 사이즈
 
     public PageDTO(Criteria cri, int total) {
         this.cri = cri;
         this.total = total;
 
-        this.endPage = (int) (Math.ceil(cri.getPageNum() / 10.0)) * 10;
+        this.endPage = (int) (Math.ceil(cri.getPageNum() / (double) cri.getDisplayPageNum()) * cri.getDisplayPageNum());
 
-        this.startPage = endPage - 9;
+        this.startPage = (endPage - cri.getDisplayPageNum()) + 1;
+        if(startPage <= 0 ) startPage =1;
+
         this.prev = startPage > 1;
         int realEnd = (int) (Math.ceil((total * 1.0) / cri.getAmount()));
 
