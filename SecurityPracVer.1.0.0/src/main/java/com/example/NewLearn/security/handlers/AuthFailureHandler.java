@@ -19,7 +19,7 @@ import java.io.IOException;
 public class AuthFailureHandler implements AuthenticationFailureHandler {
 
     @Autowired
-    SecurityService securityService;
+    SecurityService securityServiceMapper;
 
     private static final Logger logger = LoggerFactory.getLogger(AuthFailureHandler.class);
 
@@ -39,13 +39,13 @@ public class AuthFailureHandler implements AuthenticationFailureHandler {
         try {
             email = exception.getMessage();
 
-            if (securityService.selectMemberInfo(email) != null) {
-                securityService.passwordFailCnt(email);
+            if (securityServiceMapper.selectMemberInfo(email) != null) {
+                securityServiceMapper.passwordFailCnt(email);
 
                 loginLogDTO.setLoginIp(ip);
                 loginLogDTO.setEmail(email);
                 loginLogDTO.setStatus("failure");
-                securityService.AddLoginLog(loginLogDTO);
+                securityServiceMapper.AddLoginLog(loginLogDTO);
                 msg = "password miss matching";
             } else {
                 msg = "can not found E-mail";

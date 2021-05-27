@@ -10,6 +10,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,6 +31,7 @@ public class SecurityServiceImpl implements SecurityService {
     public List<MemberDTO> selectAllMember(Criteria cri) {
         log.info("여기는 select all member 서비스 단!!!! ");
         return boardMemberMapper.selectAllMember(cri);
+
     }
 
     @Override
@@ -51,6 +53,8 @@ public class SecurityServiceImpl implements SecurityService {
             member.setAuthorities(authorities);
 
         }
+        System.out.println("member = " + member);
+        System.out.println("authorities = " + authorities);
         return member;
     }
 

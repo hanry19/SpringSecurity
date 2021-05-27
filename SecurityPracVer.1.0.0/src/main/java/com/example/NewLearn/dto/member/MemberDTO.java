@@ -17,7 +17,7 @@ import java.util.Map;
 @ToString
 public class MemberDTO implements UserDetails {
 
-    private int no;
+    private int id;
     private String email;
     private String password;
     private String name;

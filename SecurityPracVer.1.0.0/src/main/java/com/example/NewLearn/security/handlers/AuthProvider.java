@@ -5,7 +5,6 @@ import com.example.NewLearn.service.security.SecurityService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -28,7 +27,7 @@ public class AuthProvider implements AuthenticationProvider {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthSuccessHandler.class);
 
-    private final SecurityService securityService;
+    private final SecurityService securityServiceMapper;
 
     //로그인 버튼을 누를 경우
     //실행 1
@@ -50,7 +49,7 @@ public class AuthProvider implements AuthenticationProvider {
 
         MemberDTO member = new MemberDTO();
 
-        member = (MemberDTO) securityService.loadUserByUsername(email);
+        member = (MemberDTO) securityServiceMapper.loadUserByUsername(email);
 
         if (member == null) {
             logger.info("::::::::: 회원정보 없다!!!::::::::");

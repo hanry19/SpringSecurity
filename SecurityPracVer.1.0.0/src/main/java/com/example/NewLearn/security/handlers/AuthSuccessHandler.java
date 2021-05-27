@@ -3,7 +3,6 @@ package com.example.NewLearn.security.handlers;
 import com.example.NewLearn.dto.security.LoginLogDTO;
 import com.example.NewLearn.service.security.SecurityService;
 import com.example.NewLearn.util.CommonUtil;
-import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,7 +32,7 @@ public class AuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     private static final Logger logger = LoggerFactory.getLogger(AuthSuccessHandler.class);
 
     @Autowired
-    SecurityService securityService;
+    SecurityService securityServiceMapper;
 
 
     @Override
@@ -49,18 +47,23 @@ public class AuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
         logger.info("# AuthSuccessHandler 3번"+ip);
         logger.info("로그인 아이피  "+ip);
         logger.info("::::::::::::::: 로그인 성공 !!! ::::::::::::::::");
-        LoginLogDTO loginLogDTO = new LoginLogDTO();
+
         String email = "";
 
         try {
             email = authentication.getName().toString();
+            String getDetails = authentication.getDetails().toString();
+            String getAuthorities = authentication.getAuthorities().toString();
+            String s = authentication.getPrincipal().toString();
 
-            securityService.resetPasswordFailCnt(email);
 
-            loginLogDTO.setLoginIp(ip);
-            loginLogDTO.setEmail(email);
-            loginLogDTO.setStatus("success");
-            securityService.AddLoginLog(loginLogDTO);
+            System.out.println("email = " + email);
+            System.out.println("a = " + getDetails);
+            System.out.println("b = " + getAuthorities);
+            System.out.println("s = " + s);
+
+            securityServiceMapper.resetPasswordFailCnt(email);
+
 
         } catch (Exception e) {
             e.printStackTrace();

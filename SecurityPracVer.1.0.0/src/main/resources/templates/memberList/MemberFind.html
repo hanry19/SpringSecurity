@@ -4,10 +4,13 @@
 <th:block th:replace="~{/layout/mypage :: setContent(~{this::content} )}">
 
     <th:block th:fragment="content">
-
-
-     <h2>이것은 멤버 정보 찾기 </h2>
-
+<h1> 비밀번호 찾기 </h1>
+        <br/>
+        <h2> 가입시 등록한 이메일을 적어주세요</h2>
+        <form th:action="@{/pwFind}" method="post">
+            <input name="email" th:value="${email}" placeholder="가입 시 등록한 이메일 적으세요"> <br>
+            <button> 임시 비밀번호 발송</button>
+        </form>
     </th:block>
 
 </th:block>

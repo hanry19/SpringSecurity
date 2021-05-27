@@ -24,6 +24,7 @@ public class Criteria {
         this.displayPageNum = 5;
     }
 
+
     // mysql의 limit 구문에 사용 되는 메서드
     public int getPageStart(){
         return (pageNum-1) * amount;
@@ -32,8 +33,8 @@ public class Criteria {
     // loop를 돌리 기 위해 배열이 필요하다.
     public String[] getTypeArr() {
 
-        // string 배열이 null이 안나오게 하려고 빈 배열을 준다.
-        return  type == null? new String[] {} : type.split("");
+    // string 배열이 null이 안나오게 하려고 빈 배열을 준다.
+    return  type == null? new String[] {} : type.split("");
 
     }
 

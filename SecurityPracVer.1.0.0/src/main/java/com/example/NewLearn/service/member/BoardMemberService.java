@@ -7,8 +7,11 @@ import java.util.List;
 
 public interface BoardMemberService {
 
-    // 회원 전체 조회
+    // 관리자 : 회원 전체 조회
     List<MemberDTO> selectAllMember(Criteria cri);
+
+    // 회원 : 로그인 해당 계정 정보 조회
+    List<MemberDTO> selectMember(String email);
 
     //전체 글 수량 조회
     int getTotal();

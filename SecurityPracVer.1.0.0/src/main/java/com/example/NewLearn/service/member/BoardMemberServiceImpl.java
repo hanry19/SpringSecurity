@@ -20,9 +20,16 @@ public class BoardMemberServiceImpl implements BoardMemberService {
 
     @Override
     public List<MemberDTO> selectAllMember(Criteria cri) {
-        log.info("여기는 select all member 서비스 단!!!! ");
+        log.info("[관리자 / 서비스] 정보 조회");
         return boardMemberMapper.selectAllMember(cri);
     }
+
+    @Override
+    public List<MemberDTO> selectMember(String email) {
+        log.info("[회원 / 서비스] 회원정보 " + email +" 정보 조회 ");
+        return boardMemberMapper.selectMember(email);
+    }
+
 
     @Override
     public int getTotal() {

@@ -6,6 +6,7 @@ import com.example.NewLearn.dto.paging.PageDTO;
 import com.example.NewLearn.service.member.BoardMemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,23 +24,30 @@ public class UserPageController {
 
     // 전체 회원 리스트 조회
     @GetMapping({"/select"})
-    public String selectAllMember(Criteria cri, Model model) {
+    public String selectAllMember(Criteria cri, Model model, Authentication auth) {
         List<MemberDTO> memberDTOS = new ArrayList<>();
 
-        log.info(":::::::::::: 전체회원 조회  in controller :::::::::::: ");
+        if (auth.getAuthorities().toString().equals("[ROLE_ADMIN]")) {
 
-        memberDTOS = boardMemberService.selectAllMember(cri);
+            log.info("::::[ controller 관리자 ]:::: 전체회원 조회  :::::::::::: ");
 
-        model.addAttribute("result", memberDTOS);
-        model.addAttribute("pageMaker", new PageDTO(cri, boardMemberService.getTotal()));
 
+            return "redirect:/admin/member";
+        }else {
+
+            memberDTOS = boardMemberService.selectMember(auth.getName());
+
+            model.addAttribute("result", memberDTOS);
+            model.addAttribute("pageMaker", new PageDTO(cri, boardMemberService.getTotal()));
         return "memberList/memberList";
+    }
     }
 
     // 회원 상세 조회
     @GetMapping("/detail/{no}")
     public String selectMemberDetail(@PathVariable int no, Model model) {
         log.info("::::::::::: 회원 상세조회  in controller ::::::::::::::");
+
 
         model.addAttribute("detail", boardMemberService.selectDetailMember(no));
         return "memberList/memberDetail";
@@ -62,7 +70,7 @@ public class UserPageController {
 
         log.info("::::::::::: 회원 정보 수정 완료 in controller  :::::::::::::::::::");
         boardMemberService.memberUpdate(memberDTO);
-        String no = Long.toString(memberDTO.getNo());
+        String no = Long.toString(memberDTO.getId());
 
         return "redirect:/mypage/detail/"+no;
     }

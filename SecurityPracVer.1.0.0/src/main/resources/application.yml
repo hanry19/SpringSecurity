@@ -9,11 +9,23 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 
+
   messages:
     basename: message/message
 
   thymeleaf:
     cache: false
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: qntkstksmstjdwns2@gmail.com
+    password: tmxkqjrtm12!
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 #  profiles:
 #    include: oauth
 

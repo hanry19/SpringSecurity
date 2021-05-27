@@ -1,10 +1,13 @@
 package com.example.NewLearn.mapper.member;
 
 import com.example.NewLearn.dto.member.MemberDTO;
+import com.example.NewLearn.service.security.SecurityService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.annotation.Rollback;
 
 import java.util.HashMap;
@@ -19,6 +22,9 @@ class BoardMemberMapperTest {
     @Autowired
     BoardMemberMapper boardMemberMapper;
 
+    @Autowired
+    SecurityService securityServiceMapper;
+
 
     @Test
     void test() {
@@ -26,10 +32,6 @@ class BoardMemberMapperTest {
 
         memberDTO.setPassword("123123");
         memberDTO.setEmail("123");
-        memberDTO.setPhone("010101010101010");
-        memberDTO.setBlogUrl("www.naver.com");
-        memberDTO.setGitUrl("www.daum.net");
-        memberDTO.setId("hsj3");
 
         boardMemberMapper.memberUpdate(memberDTO);
 
@@ -53,5 +55,28 @@ class BoardMemberMapperTest {
 
     }
 
+    @Test
+    @DisplayName("asd")
+    public void testMapper() {
 
+        MemberDTO memberDTO = securityServiceMapper.selectMemberInfo("hanry18@gmail.com");
+        System.out.println("memberDTO = " + memberDTO);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Object principal = auth.getPrincipal();
+
+//        System.out.println("email = " +  auth.getName());
+
+
+
+//        memberDTO.getAuthorities().forEach(grantedAuthority -> System.out.println("grantedAuthority = " + grantedAuthority));
+
+    }
+
+    @Test
+    public void testt() {
+        Authentication auth =SecurityContextHolder.getContext().getAuthentication();
+        Object principal = auth.getPrincipal();
+
+
+    }
 }

@@ -11,7 +11,7 @@ import java.util.List;
 public interface SecurityService extends UserDetailsService {
 
     // 회원정보조회
-    MemberDTO selectMemberInfo(String id);
+    MemberDTO selectMemberInfo(String email);
     //회원가입
     int memberSignUp(MemberDTO member)throws Exception;
     // 시큐리티 사용자 인증
@@ -30,5 +30,7 @@ public interface SecurityService extends UserDetailsService {
 
     //전체 글 수량 조회
     int getTotal();
+
+
 
 }

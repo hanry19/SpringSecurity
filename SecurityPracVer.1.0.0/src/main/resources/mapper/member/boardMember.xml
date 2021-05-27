@@ -7,36 +7,89 @@
 <mapper namespace="com.example.NewLearn.mapper.member.BoardMemberMapper">
 
     <sql id="criteria">
-        <trim prefix="(" suffix=") AND">
+
             <foreach collection="typeArr" item="type" separator="or">
-                <if test="type =='I'.toString()">
-                 where  email like concat( '%', #{keyword},'%')
+                 <if test="type =='E'.toString()">
+                     where  email like concat( '%', #{keyword},'%')
                 </if>
+
                 <if test="type =='N'.toString()">
-                where    name like '% #{keyword} %'
+                    where    name like CONCAT('%',#{keyword},'%')
+                </if>
+
+                <if test="type =='A'.toString()">
+
+                    where concat(name, email) REGEXP #{keyword}
+
                 </if>
 
             </foreach>
-        </trim>
+
     </sql>
 
 
     <select id="searchTest" resultType="com.example.NewLearn.dto.member.MemberDTO">
 
-        select * from memberList
+        select
+
+        no as id
+        , email as email
+        , name as name
+        , role as role
+        , password as password
+        , passwordLock as passwordLock
+        , regDate as regDate
+        , status as status
+
+        from memberList
+
         <include refid="criteria"></include>
-        order by no desc
-        limit #{pageStart},#{amount};
+
+        order by id desc
+
+        limit #{pageStart},#{amount}
 
     </select>
 
 
     <select id="selectAllMember" resultType="com.example.NewLearn.dto.member.MemberDTO">
-        select * from memberList
+
+
+        select
+
+        no as id
+        , email as email
+        , name as name
+        , role as role
+        , password as password
+        , passwordLock as passwordLock
+        , regDate as regDate
+        , status as status
+
+        from memberList
 
         <include refid="criteria"></include>
-        order by no desc
-        limit #{pageStart},#{amount};
+
+        order by id desc
+
+        limit #{pageStart}, #{amount}
+
+    </select>
+
+    <select id="selectMember" resultType="com.example.NewLearn.dto.member.MemberDTO">
+        select
+            no as id
+                , email as email
+                , name as name
+                , role as role
+                , password as password
+                , passwordLock as passwordLock
+                , regDate as regDate
+                , status as status
+
+        from memberList
+        where email = #{email}
+
     </select>
 
     <select id="getTotal" resultType="int">
@@ -47,9 +100,19 @@
     </select>
 
     <select id="selectDetailMember" resultType="com.example.NewLearn.dto.member.MemberDTO">
-        select *
+        select
+
+            no as id
+                , email as email
+                , name as name
+                , role as role
+                , password as password
+                , passwordLock as passwordLock
+                , regDate as regDate
+                , status as status
+
         from memberList
-        where no = #{no}
+        where id = #{id}
     </select>
 
     <delete id="memberDelete" parameterType="int">
@@ -62,12 +125,23 @@
 
         update memberList
         set
-            name = #{name},
-            Password = #{password}
+            name = #{name}
+        <if test='password != ""'> , Password = #{password}</if>
 
-        where no = #{no}
+        where no as id = #{id}
 
     </update>
 
+    <!-- 임시 비밀번호 발급 -->
+    <update id="tempPw" parameterType="com.example.NewLearn.dto.member.MemberDTO" >
+        update memberList set
+            Password = #{password}
+        where email = #{email}
+
+    </update>
+
+    <select id="checkId" resultType="String" >
+        select email from memberList where email=#{email}
+    </select>
 
 </mapper>

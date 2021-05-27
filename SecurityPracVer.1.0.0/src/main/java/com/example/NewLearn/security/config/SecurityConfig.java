@@ -3,10 +3,13 @@ package com.example.NewLearn.security.config;
 import com.example.NewLearn.security.handlers.AuthFailureHandler;
 import com.example.NewLearn.security.handlers.AuthProvider;
 import com.example.NewLearn.security.handlers.AuthSuccessHandler;
+import com.example.NewLearn.service.security.SecurityService;
+import com.example.NewLearn.service.security.SecurityServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -23,9 +26,6 @@ import javax.sql.DataSource;
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-
-    private final DataSource dataSource;
-    private final AuthProvider authProvider;
     private final AuthSuccessHandler authSuccessHandler;
     private final AuthFailureHandler authFailureHandler;
 
@@ -34,20 +34,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean           //  For remember-me Logic Not yet finish.
-    public PersistentTokenRepository persistentTokenRepository() {
-        JdbcTokenRepositoryImpl repo = new JdbcTokenRepositoryImpl();
-        repo.setDataSource(dataSource);
-        return repo;
-    }
 
-// 이거 지워도 되는건가 모르겟네
-// 2021.05.15 토요일 5시  성준아 이거 확인해보고 답장 줘
 
-    //    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.authenticationProvider(authProvider);
-//    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -68,6 +56,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/login/**",
                         "/oauth/**",
                         "/oauth2/**",
+                        "/pwFind/**",
+                        "/css/**",
+                        "/vendor/**",
                         "/logout"
 
                 ).permitAll()
@@ -90,18 +81,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
         http.logout()
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/login");
-                //logout 경로로 요청이 들어올 경우 이 경로로 리다이렉트 하고 세션 초기화
-//                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-//                .logoutSuccessUrl("/login")  // 이 경로로 리다이렉트 하고
-//                .invalidateHttpSession(true);   // 세션 초기화
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/login")  // 이 경로로 리다이렉트 하고
+                .invalidateHttpSession(true);   // 세션 초기화
 
-
-        http.rememberMe()
-                .key("zerock")
-                .tokenRepository(persistentTokenRepository())
-                .tokenValiditySeconds(604800);
     }
 
     @Override

@@ -20,11 +20,11 @@
                 </thead>
                 <tbody>
                 <tr >
-                    <input type="hidden" id="no" name="no" th:value="${update.no}"  >
-                    <td><p  th:text="${update.no}"></p></td>
+                    <input type="hidden" id="no" name="no" th:value="${update.id}"  >
+                    <td><p  th:text="${update.id}"></p></td>
                     <td><p  th:text="${update.email}"></p></td>
                     <td><input type="text" id="name" name="name" th:value="${update.name}"></td>
-                    <td><input type="password" id="password" name="password" th:value="${update.password}"></td>
+                    <td><input type="password" id="password" name="password" value=""></td>
 
                     <td><input class="btn_wrap text-left" type="submit" value="수정완료"  th:formaction="@{/mypage/update}"></td>
 

@@ -4,11 +4,7 @@ import com.example.NewLearn.dto.member.MemberDTO;
 import com.example.NewLearn.service.security.SecurityService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -16,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class LoginController {
 
-    private final SecurityService securityService;
+    private final SecurityService securityServiceMapper;
 
 
     //회원가입 GET
@@ -31,7 +27,7 @@ public class LoginController {
     @PostMapping("/sign-Up")
     private String setInsertMember(@ModelAttribute MemberDTO memberDTO) throws Exception{
         log.info("::::::::::: 회원가입 전송 in controller ::::::::::::::::::");
-        securityService.memberSignUp(memberDTO);
+        securityServiceMapper.memberSignUp(memberDTO);
         return "forward:/login";
     }
 
@@ -62,7 +58,7 @@ public class LoginController {
     @PostMapping("/join/idCheck")
     @ResponseBody
     private String idCheck(@RequestParam String email) throws Exception{
-        MemberDTO memberDTO = securityService.selectMemberInfo(email);
+        MemberDTO memberDTO = securityServiceMapper.selectMemberInfo(email);
         String canUse = memberDTO != null ? "" : "Y";
         return canUse;
     }
