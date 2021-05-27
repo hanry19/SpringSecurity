@@ -95,8 +95,10 @@
   
 # 프로젝트 중 직면한 문제
   
+  <br/>
   
- **첫번 째 문제**
+  
+> **첫번 째 문제**
  
  
  <br/>
@@ -137,9 +139,14 @@
                 .antMatchers("/**").authenticated();
    
    ```
+   
+   <br/>
+   
+   
+  <br/>
 
 
- **두번 째 문제**
+> **두번 째 문제**
  
  
  <br/>
@@ -160,6 +167,8 @@
   
   
    - 하지만 확장 및 설정을 고려하지 않은 상황에서 메서드에 포함이 되어 있어 404 error가 발생하였다. 심지어 url조차 전달이 되지 않았다.
+   
+   
    ![image](https://user-images.githubusercontent.com/63430211/118206624-da48c780-b49d-11eb-9757-363af28b323c.png)
   
   <br/>
@@ -173,6 +182,7 @@
   
    - FilterChain이 포함되어있지않는 메서드를 다시 오버로딩하여 사용함으로써 로그인 이후 페이지로 넘어갔다
    - 첫 서버 running 시 진행한 Filter이 외 Filter에 대한 접근이 없기에 정상적으로 진행된 것으로 생각이 든다. 
+  
    
    ```java   @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
